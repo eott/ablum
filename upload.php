@@ -1,4 +1,56 @@
 <?php
+    function createResizedCopy($sourceFile, $targetFile, $type, $crop = true, $width = 150, $height = 100) {
+        $image = imagecreatefromstring(file_get_contents($sourceFile));
+
+        $widthOrig = imagesx($image);
+        $heightOrig = imagesy($image);
+        $scaledHeight = ceil($heightOrig * ($width / $widthOrig));
+
+        if (!$crop) {
+            $height = $scaledHeight;
+            $topMarginSource = 0;
+        } else {
+            $topMarginSource = floor(max(0, ($scaledHeight - $height) / $scaledHeight) * $heightOrig * 0.5);
+        }
+
+        $frameHeight = floor($heightOrig - 2 * $topMarginSource);
+        $resized = imagecreatetruecolor($width, $height);
+
+        // Keep transparency
+        if ($type == 'png' && $specs['keepTransparency']) {
+            $color = imagecolorallocatealpha($resized, 0, 0, 0, 127);
+            imagefill($resized, 0, 0, $color);
+            imagesavealpha($resized, TRUE);
+            imagecolortransparent($resized, $color);
+        // or set black background
+        } else {
+            $color = imagecolorallocate($resized, 0, 0, 0);
+            imagefill($resized, 0, 0, $color);
+        }
+
+        imagecopyresized(
+            $resized, // Put stuff into this image,
+            $image, // take it from this image,
+            0, 0, // put it at these target coords,
+            0, $topMarginSource, // take it from these source coords,
+            $width, $height, // put it with these dimensions,
+            $widthOrig, $frameHeight // and take it from these dimensions
+        );
+
+        switch ($type) {
+            case 'jpeg':
+            case 'jpg':
+                imagejpeg($resized, $targetFile, 90);
+                break;
+            case 'png':
+                imagepng($resized, $targetFile, 9);
+                break;
+            case 'gif':
+                imagegif($resized, $targetFile);
+                break;
+        }
+    }
+
     ini_set("display_errors", true);
     error_reporting(E_ALL);
 
@@ -8,6 +60,12 @@
     $targetDir = "assets/uploads/";
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0777, true);
+    }
+    if (!is_dir($targetDir . "thumbnails/")) {
+        mkdir($targetDir . "thumbnails/", 0777, true);
+    }
+    if (!is_dir($targetDir . "main/")) {
+        mkdir($targetDir . "main/", 0777, true);
     }
 
     $errors = array();
@@ -54,58 +112,30 @@
 
         // Move uploaded file to target dir
         $newName = preg_replace("#[^a-zA-Z0-9\._-]#", "", basename($_FILES[$elementName]["name"]));
-        $targetFile = $targetDir . $newName;
-        if (!move_uploaded_file($_FILES[$elementName]["tmp_name"], $targetFile)) {
+        if (!move_uploaded_file($_FILES[$elementName]["tmp_name"], $targetDir . $newName)) {
             $errors[$elementName][] = "There was an error uploading your file.";
             continue;
         }
 
-        // Create thumbnail
-        $image = imagecreatefromstring(file_get_contents($targetFile));
-        $resized = imagecreatetruecolor(150, 90);
-
-        $widthOrig = imagesx($image);
-        $heightOrig = imagesy($image);
-        $factorX = 150 / $widthOrig;
-        $factorY = 90 / $heightOrig;
-
-        // Keep transparency
-        if ($type == 'png' && $specs['keepTransparency']) {
-            $color = imagecolorallocatealpha($resized, 0, 0, 0, 127);
-            imagefill($resized, 0, 0, $color);
-            imagesavealpha($resized, TRUE);
-            imagecolortransparent($resized, $color);
-        // or set black background
-        } else {
-            $color = imagecolorallocate($resized, 0, 0, 0);
-            imagefill($resized, 0, 0, $color);
-        }
-
-        imagecopyresized(
-            $resized, $image, 0, 0, 0, 0,
-            ceil($factorX * $widthOrig), ceil($factorY * $heightOrig),
-            $widthOrig, $heightOrig
+        // Make main image
+        createResizedCopy(
+            $targetDir . $newName,
+            $targetDir . "main/" . $newName,
+            $type,
+            false,
+            1920,
+            1280
         );
 
-        $thumbsDir = $targetDir . "thumbnails/";
-        $targetFile = $thumbsDir . $newName;
-
-        if (!is_dir($thumbsDir)) {
-            mkdir($thumbsDir, 0777, true);
-        }
-
-        switch ($type) {
-            case 'jpeg':
-            case 'jpg':
-                imagejpeg($resized, $targetFile, 90);
-                break;
-            case 'png':
-                imagepng($resized, $targetFile, 9);
-                break;
-            case 'gif':
-                imagegif($resized, $targetFile);
-                break;
-        }
+        // Make thumbnail
+        createResizedCopy(
+            $targetDir . "main/" . $newName,
+            $targetDir . "thumbnails/" . $newName,
+            $type,
+            true,
+            150,
+            100
+        );
     }
 ?>
 
