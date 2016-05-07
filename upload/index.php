@@ -57,7 +57,7 @@
     const MAX_FILE_UPLOAD_NR = 3;
     const MAX_UPLOAD_SIZE_IN_MB = 5.0;
 
-    $targetDir = "assets/uploads/";
+    $targetDir = "../assets/uploads/";
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0777, true);
     }
@@ -179,13 +179,13 @@
     <head>
         <meta charset="utf-8"/>
         <title>Upload</title>
-        <link rel="icon" type="image/png" href="favicon.png"/>
-        <link href="styles/upload.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" type="image/png" href="../favicon.png"/>
+        <link href="../styles/upload.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body>
         <h1>Upload</h1>
-        <form action="upload.php" method="post" id="uploadForm" enctype="multipart/form-data">
+        <form action="../upload/index.php" method="post" id="uploadForm" enctype="multipart/form-data">
             <?php for ($i = 1; $i <= MAX_FILE_UPLOAD_NR; $i++): ?>
                 <input type="file" name="file_<?php echo $i; ?>"/>
                 <?php if (!empty($errors["file_" . $i])): ?>
@@ -201,8 +201,8 @@
         </form>
 
         <h1>Delete Pictures</h1>
-        <form action="upload.php" method="post" id="deleteForm">
-            <?php foreach (glob("assets/uploads/thumbnails/*") as $index => $thumb): ?>
+        <form action="../upload/index.php" method="post" id="deleteForm">
+            <?php foreach (glob("../assets/uploads/thumbnails/*") as $index => $thumb): ?>
                 <?php $name = explode('.', basename($thumb)); ?>
                 <input class="check" type="checkbox" name="c_<?php echo $name[1] . '_' . $name[0]; ?>"/>
                 <img class="thumbnail" src="<?php echo $thumb; ?>" alt="" />
