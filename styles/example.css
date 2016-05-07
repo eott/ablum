@@ -1,0 +1,11 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#pictureFrame {
+    width: 80%;
+    height: 80%;
+    margin: 5% 0 0 10%;
+    box-shadow: 5px 5px 5px 5px #777777;
+}
