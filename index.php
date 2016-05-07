@@ -15,6 +15,7 @@
     }
 ?>
 
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -25,7 +26,7 @@
             integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
             crossorigin="anonymous">
         </script>
-        <script src="scripts/example.js"></script>
+        <script src="scripts/common.js"></script>
     </head>
 
     <body>
