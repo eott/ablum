@@ -38,7 +38,7 @@
 
         // Allow certain file formats
         $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $ext = array_search(
+        $type = array_search(
             $finfo->file($_FILES[$elementName]['tmp_name']),
             array(
                 'jpg' => 'image/jpeg',
@@ -47,16 +47,64 @@
             ),
             true
         );
-        if ($ext === false) {
+        if ($type === false) {
             $errors[$elementName][] = "Only JPG/JPEG, PNG & GIF files are allowed.";
             continue;
         }
 
         // Move uploaded file to target dir
-        $targetFile = $targetDir . preg_replace("#[^a-zA-Z0-9\._-]#", "", basename($_FILES[$elementName]["name"]));
+        $newName = preg_replace("#[^a-zA-Z0-9\._-]#", "", basename($_FILES[$elementName]["name"]));
+        $targetFile = $targetDir . $newName;
         if (!move_uploaded_file($_FILES[$elementName]["tmp_name"], $targetFile)) {
             $errors[$elementName][] = "There was an error uploading your file.";
             continue;
+        }
+
+        // Create thumbnail
+        $image = imagecreatefromstring(file_get_contents($targetFile));
+        $resized = imagecreatetruecolor(150, 90);
+
+        $widthOrig = imagesx($image);
+        $heightOrig = imagesy($image);
+        $factorX = 150 / $widthOrig;
+        $factorY = 90 / $heightOrig;
+
+        // Keep transparency
+        if ($type == 'png' && $specs['keepTransparency']) {
+            $color = imagecolorallocatealpha($resized, 0, 0, 0, 127);
+            imagefill($resized, 0, 0, $color);
+            imagesavealpha($resized, TRUE);
+            imagecolortransparent($resized, $color);
+        // or set black background
+        } else {
+            $color = imagecolorallocate($resized, 0, 0, 0);
+            imagefill($resized, 0, 0, $color);
+        }
+
+        imagecopyresized(
+            $resized, $image, 0, 0, 0, 0,
+            ceil($factorX * $widthOrig), ceil($factorY * $heightOrig),
+            $widthOrig, $heightOrig
+        );
+
+        $targetDir .= "thumbnails/";
+        $targetFile = $targetDir . $newName;
+
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        switch ($type) {
+            case 'jpeg':
+            case 'jpg':
+                imagejpeg($resized, $targetFile, 90);
+                break;
+            case 'png':
+                imagepng($resized, $targetFile, 9);
+                break;
+            case 'gif':
+                imagegif($resized, $targetFile);
+                break;
         }
     }
 ?>
