@@ -21,7 +21,7 @@
         <meta charset="utf-8"/>
         <title><?php echo $settings["title"]; ?></title>
         <link rel="icon" type="image/png" href="<?php echo $settings["favicon"]; ?>"/>
-        <link href="styles/example.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/<?php echo $settings["style"]; ?>" rel="stylesheet" type="text/css"/>
         <script src="https://code.jquery.com/jquery-2.2.3.min.js"
             integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
             crossorigin="anonymous">
