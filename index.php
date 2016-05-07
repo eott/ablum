@@ -4,7 +4,7 @@
     }
 
     function getFirstPicture() {
-        $globs = array_filter(glob("assets/uploads/*"), 'is_file');
+        $globs = array_filter(glob("assets/uploads/main/*"), 'is_file');
         return isset($globs[0]) ? $globs[0] : null;
     }
 ?>

@@ -14,7 +14,7 @@ $.extend({
 
     updateMainPictureForThumbnail: function(element) {
         var filename = element.attr('src');
-        filename = filename.replace('thumbnails/', '');
+        filename = filename.replace('thumbnails/', 'main/');
         $('#mainPicture').attr('src', filename);
     }
 });
