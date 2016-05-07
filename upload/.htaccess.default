@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Album upload"
+AuthUserFile /path/to/.htpasswd
+Require valid-user
