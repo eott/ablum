@@ -20,7 +20,10 @@ body {
 
 #thumbsSlider {
     font-size: 0; /* Hides whitespace */
-    height: 15%;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    height: 90px;
 }
 
 #thumbsSlider ul {
@@ -31,6 +34,10 @@ body {
 #thumbsSlider ul li {
     display: inline-block;
     cursor: pointer;
+    -webkit-transition-duration: 250ms;
+    -moz-transition-duration: 250ms;
+    -o-transition-duration: 250ms;
+    transition-duration: 250ms;
 }
 
 #mainPicture {
@@ -43,17 +50,17 @@ body {
     cursor: zoom-out;
 }
 
-#navPrevious {
+.navPrevious {
     position: absolute;
-    background: rgba(200, 200, 200, 0.3);
+    background: rgba(200, 200, 200, 0.6);
     width: 32px;
     height: 100%;
     padding: 0 10px;
 }
 
-#navNext {
+.navNext {
     position: absolute;
-    background: rgba(200, 200, 200, 0.3);
+    background: rgba(200, 200, 200, 0.6);
     width: 32px;
     height: 100%;
     padding: 0 10px;

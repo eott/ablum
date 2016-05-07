@@ -24,20 +24,26 @@
 
     <body>
         <div id="thumbsSlider">
+            <div class="navPrevious thumbs">
+                <div class="navPreviousIcon"></div>
+            </div>
+            <div class="navNext thumbs">
+                <div class="navNextIcon"></div>
+            </div>
             <ul>
-                <?php foreach (getThumbnails() as $thumb): ?>
+                <?php foreach (getThumbnails() as $index => $thumb): ?>
                     <li>
-                        <img class="thumbnail" src="<?php echo $thumb; ?>" alt="" />
+                        <img class="thumbnail <?php echo $index == 0 ? 'active' : ''; ?>" src="<?php echo $thumb; ?>" alt="" />
                     </li>
                 <?php endforeach; ?>
             </ul>
         </div>
 
         <div id="pictureFrame">
-            <div id="navPrevious">
+            <div class="navPrevious main">
                 <div class="navPreviousIcon"></div>
             </div>
-            <div id="navNext">
+            <div class="navNext main">
                 <div class="navNextIcon"></div>
             </div>
 
