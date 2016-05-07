@@ -137,6 +137,42 @@
             100
         );
     }
+
+    // Delete images
+    foreach ($_POST as $elementName => $val) {
+        if (substr($elementName, 0, 2) == 'c_') {
+            $filename = explode('_', $elementName);
+            if (count($filename) < 3) {
+                continue;
+            }
+
+            array_shift($filename);
+            $ext = $filename[0];
+            array_shift($filename);
+            $filename = implode('_', $filename);
+
+            $filename = preg_replace("#[^a-zA-Z0-9\._-]#", "", $filename);
+            $filename = str_replace('..', '', $filename);
+
+            if (empty($filename)) {
+                continue;
+            }
+
+            $filename .= '.' . $ext;
+
+            if (file_exists($targetDir . $filename)) {
+                unlink($targetDir . $filename);
+            }
+
+            if (file_exists($targetDir . "main/" . $filename)) {
+                unlink($targetDir . "main/" . $filename);
+            }
+
+            if (file_exists($targetDir . "thumbnails/" . $filename)) {
+                unlink($targetDir . "thumbnails/" . $filename);
+            }
+        }
+    }
 ?>
 
 <html>
@@ -151,7 +187,7 @@
         <h1>Upload</h1>
         <form action="upload.php" method="post" id="uploadForm" enctype="multipart/form-data">
             <?php for ($i = 1; $i <= MAX_FILE_UPLOAD_NR; $i++): ?>
-                <input type="file" name="file_<?php echo $i; ?>" id="file_<?php echo $i; ?>"/>
+                <input type="file" name="file_<?php echo $i; ?>"/>
                 <?php if (!empty($errors["file_" . $i])): ?>
                     <ul class="errors">
                         <?php foreach ($errors["file_" . $i] as $error): ?>
@@ -161,9 +197,18 @@
                 <?php endif; ?>
             <?php endfor;?>
 
-            <input type="submit" name="submit" id="submit"/>
+            <input type="submit" name="submit"/>
         </form>
 
         <h1>Delete Pictures</h1>
+        <form action="upload.php" method="post" id="deleteForm">
+            <?php foreach (glob("assets/uploads/thumbnails/*") as $index => $thumb): ?>
+                <?php $name = explode('.', basename($thumb)); ?>
+                <input class="check" type="checkbox" name="c_<?php echo $name[1] . '_' . $name[0]; ?>"/>
+                <img class="thumbnail" src="<?php echo $thumb; ?>" alt="" />
+                <br/><br/>
+            <?php endforeach; ?>
+            <input type="submit" name="submit" />
+        </form>
     </body>
 </html>

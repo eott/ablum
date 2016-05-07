@@ -17,3 +17,11 @@ input {
 h1 {
     text-align: center;
 }
+
+img {
+    display: inline-block;
+}
+
+.check {
+    display: inline-block;
+}
