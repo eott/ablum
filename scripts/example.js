@@ -20,6 +20,13 @@ $(document).ready(function () {
         }
     });
 
+    $('.navPrevious.thumbs, .navPrevious.main').on('click', function (e) {
+        $('#thumbsSlider li:last-child').prependTo($('#thumbsSlider ul'));
+    });
+    $('.navNext.thumbs, .navNext.main').on('click', function (e) {
+        $('#thumbsSlider li:first-child').appendTo($('#thumbsSlider ul'));
+    });
+
     $('#mainPicture').on('click', function() {
         if ($(this).hasClass('fullsize')) {
             $(this).removeClass('fullsize');
