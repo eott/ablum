@@ -1,3 +1,9 @@
+<?php
+    function getThumbnails() {
+        return glob("assets/uploads/thumbnails/*");
+    }
+?>
+
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -11,6 +17,16 @@
     </head>
 
     <body>
+        <div id="thumbsSlider">
+            <ul>
+                <?php foreach (getThumbnails() as $thumb): ?>
+                    <li>
+                        <img class="thumbnail" src="<?php echo $thumb; ?>" alt="" />
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
         <div id="pictureFrame">
         </div>
     </body>

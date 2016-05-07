@@ -6,6 +6,20 @@ body {
 #pictureFrame {
     width: 80%;
     height: 80%;
-    margin: 5% 0 0 10%;
+    margin: 20px 0 0 10%;
     box-shadow: 5px 5px 5px 5px #777777;
+}
+
+#thumbsSlider {
+    font-size: 0; /* Hides whitespace */
+    height: 15%;
+}
+
+#thumbsSlider ul {
+    margin: 0;
+    padding: 0;
+}
+
+#thumbsSlider ul li {
+    display: inline-block;
 }
