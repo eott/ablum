@@ -20,6 +20,8 @@ body {
     width: auto;
     height: auto;
     text-align: left;
+    display: inline-block;
+    margin-left: 0;
 }
 
 #thumbsSlider {
@@ -63,8 +65,15 @@ body {
 }
 
 #mainPicture.fullsize {
+    max-height: none;
+    max-width: none;
     height: auto;
+    width: auto;
     cursor: zoom-out;
+    top: 0;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
 }
 
 .navPrevious {
