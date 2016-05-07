@@ -1,3 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #bbbbbb;
+}
+
+form {
+    width: 80%;
+    margin: 0 auto;
+}
+
 input {
     display: inherit;
+    margin: 15px auto;
+}
+
+h1 {
+    text-align: center;
 }

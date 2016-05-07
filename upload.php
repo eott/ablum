@@ -54,7 +54,7 @@
     ini_set("display_errors", true);
     error_reporting(E_ALL);
 
-    const MAX_FILE_UPLOAD_NR = 10;
+    const MAX_FILE_UPLOAD_NR = 3;
     const MAX_UPLOAD_SIZE_IN_MB = 5.0;
 
     $targetDir = "assets/uploads/";
@@ -148,6 +148,7 @@
     </head>
 
     <body>
+        <h1>Upload</h1>
         <form action="upload.php" method="post" id="uploadForm" enctype="multipart/form-data">
             <?php for ($i = 1; $i <= MAX_FILE_UPLOAD_NR; $i++): ?>
                 <input type="file" name="file_<?php echo $i; ?>" id="file_<?php echo $i; ?>"/>
@@ -162,5 +163,7 @@
 
             <input type="submit" name="submit" id="submit"/>
         </form>
+
+        <h1>Delete Pictures</h1>
     </body>
 </html>
