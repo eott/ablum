@@ -8,6 +8,13 @@ body {
     height: 80%;
     margin: 20px 0 0 10%;
     box-shadow: 5px 5px 5px 5px #777777;
+    text-align: center;
+}
+
+#pictureFrame.fullsize {
+    width: auto;
+    height: auto;
+    text-align: left;
 }
 
 #thumbsSlider {
@@ -22,4 +29,15 @@ body {
 
 #thumbsSlider ul li {
     display: inline-block;
+    cursor: pointer;
+}
+
+#mainPicture {
+    height: 100%;
+    cursor: zoom-in;
+}
+
+#mainPicture.fullsize {
+    height: auto;
+    cursor: zoom-out;
 }

@@ -2,6 +2,11 @@
     function getThumbnails() {
         return glob("assets/uploads/thumbnails/*");
     }
+
+    function getFirstPicture() {
+        $globs = array_filter(glob("assets/uploads/*"), 'is_file');
+        return isset($globs[0]) ? $globs[0] : null;
+    }
 ?>
 
 <html>
@@ -14,6 +19,7 @@
             integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
             crossorigin="anonymous">
         </script>
+        <script src="scripts/example.js"></script>
     </head>
 
     <body>
@@ -28,6 +34,7 @@
         </div>
 
         <div id="pictureFrame">
+            <img id="mainPicture" src="<?php echo getFirstPicture(); ?>" alt="" />
         </div>
     </body>
 </html>
