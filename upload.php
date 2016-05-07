@@ -87,11 +87,11 @@
             $widthOrig, $heightOrig
         );
 
-        $targetDir .= "thumbnails/";
-        $targetFile = $targetDir . $newName;
+        $thumbsDir = $targetDir . "thumbnails/";
+        $targetFile = $thumbsDir . $newName;
 
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0777, true);
+        if (!is_dir($thumbsDir)) {
+            mkdir($thumbsDir, 0777, true);
         }
 
         switch ($type) {

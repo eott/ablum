@@ -34,6 +34,13 @@
         </div>
 
         <div id="pictureFrame">
+            <div id="navPrevious">
+                <div class="navPreviousIcon"></div>
+            </div>
+            <div id="navNext">
+                <div class="navNextIcon"></div>
+            </div>
+
             <img id="mainPicture" src="<?php echo getFirstPicture(); ?>" alt="" />
         </div>
     </body>

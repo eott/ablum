@@ -4,6 +4,7 @@ body {
 }
 
 #pictureFrame {
+    position: relative;
     width: 80%;
     height: 80%;
     margin: 20px 0 0 10%;
@@ -40,4 +41,43 @@ body {
 #mainPicture.fullsize {
     height: auto;
     cursor: zoom-out;
+}
+
+#navPrevious {
+    position: absolute;
+    background: rgba(200, 200, 200, 0.3);
+    width: 32px;
+    height: 100%;
+    padding: 0 10px;
+}
+
+#navNext {
+    position: absolute;
+    background: rgba(200, 200, 200, 0.3);
+    width: 32px;
+    height: 100%;
+    padding: 0 10px;
+    right: 0;
+}
+
+.navPreviousIcon {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background: url('../assets/icons/spritesheet_navigation_32.png') 0 0;
+    width: 32px;
+    height: 32px;
+}
+
+.navNextIcon {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background: url('../assets/icons/spritesheet_navigation_32.png') 32px 0;
+    width: 32px;
+    height: 32px;
 }
